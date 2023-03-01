@@ -1,0 +1,78 @@
+
+<html>  
+  <head>  
+        <meta charset="utf-8">  
+        <title>D3通过矩形绘制直方图</title>  
+  </head> 
+  <body>
+    <script src="ml.v6.js" charset="utf-8"></script>
+	<script src="../d3.v7.min.js" charset="utf-8"></script> 
+	<script>  
+		
+		var width=(window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth)*0.98;
+		var height=(window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight)*0.9;
+		var color = d3.schemeCategory10;//d3.schemeTableau10;
+
+		var dataset =new Array(10);
+		for (var i=0;i<dataset.length;i++){
+			dataset[i]=height*Math.random();
+		}
+		var svg = d3.select("body")			//选择<body>
+					.append("svg")			//在<body>中添加<svg>
+					.attr("width", width)	//设定<svg>的宽度属性
+					.attr("height", height);//设定<svg>的高度属性
+
+        d3.csv("Iris.csv").then(function(root){
+            console.log(root);
+            var data =new Array(150);
+
+			for (var i=0;i<data.length;i++){
+				data[i]=new Array(); 
+				data[i][0]=parseFloat(root[i].SepalLengthCm);
+				data[i][1]=parseFloat(root[i].SepalWidthCm);
+				data[i][2]=parseFloat(root[i].PetalLengthCm);
+				data[i][3]=parseFloat(root[i].PetalWidthCm);
+                //data[i][4]=root[i].Species;
+			}
+             
+            //计算聚类中心
+            var centers = [data[0],data[51],data[101]];
+
+			var ans = ML.KMeans(data,3, {initialization: centers });
+			console.log(ans);
+			console.log(ans.centroids);            
+            
+            var rect01 = svg.selectAll(".rect01")
+                            .data(data)		//绑定数据
+                            .enter()			//获取enter部分
+                            .append("rect")	    //添加rect元素，使其与绑定数组的长度一致
+                            .attr("class","rect01")
+                            .attr("x",(d)=>d[2]*100)         //(d,i)=>rectStep*i
+                            .attr("y", function(d){		//设置矩形的y坐标
+                                return height-d[3]*100;
+                            })
+                            .attr("fill",(d,i)=>color[parseInt(i/50)])
+                            .attr("stroke", (d,i)=>color[parseInt(i/50)])
+                            .attr("opacity",0.5)
+                            .attr("width",10)		//设置矩形的宽度
+                            .attr("height",10);		 //d=>d[0]
+
+            var circle = svg.selectAll("circle")
+						.data(ans.centroids)		//绑定数据
+						.enter()			//获取enter部分
+						.append("circle")	    //添加rect元素，使其与绑定数组的长度一致
+						.attr("cx", function(d,i){		//设置矩形的x坐标
+							console.log(d.centroids,d.centroid[2]);
+							return Math.floor(d.centroid[2]*100);
+						})
+						.attr("cy", function(d){		//设置矩形的y坐标
+							return height-Math.floor(d.centroid[3]*100);
+						})
+						.attr("fill", "red")
+                        .attr("opacity",0.7)
+						.attr("r",10);	                            
+        })                    
+		
+	</script> 
+</body>
+</html>

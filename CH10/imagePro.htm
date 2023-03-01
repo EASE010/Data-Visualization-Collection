@@ -1,0 +1,50 @@
+﻿<!DOCTYPE HTML>
+<html>
+  
+  <head></head>
+  
+  <body>
+		<h2>数据可视化之JS图像处理</h2>
+		<script>
+			var w=window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth;
+			var h=window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight;
+			console.log("w="+w+";h="+h);
+			//image文件
+			var img=new Image();
+			img.src="flowerS.jpg";
+			var imageArray=new Array(img.width*img.height);	
+			var canvas = document.createElement('canvas');
+			canvas.width = img.width;
+			canvas.height = img.height;
+			console.log(canvas.width+";"+canvas.height);
+			var context=canvas.getContext('2d');
+			//context.fillStyle ='rgb(0,255,0)';
+			//context.fillRect(100,344,100,100);	
+			
+			img.onload = function() {
+				canvas.width = img.width;
+				canvas.height = img.height;
+				context.drawImage(img, 0, 0);
+				
+				var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+				
+				for(i=0;i<canvas.width*canvas.height*4-3;i++){
+					var gray=Math.floor(imageData.data[i]*0.3+imageData.data[i+1]*0.59+imageData.data[i+2]*0.11);
+				
+					if(gray<240)
+					{
+						imageArray[Math.floor(i/4)]=255;   //空白区域
+							//console.log(gray);
+					}
+					else
+					{
+						imageArray[Math.floor(i/4)]=0;   //填充区域
+					}
+				}
+				context.putImageData(imageArray, 0, 0);
+				
+			} 		
+		document.body.appendChild(canvas);
+		</script>
+  </body>
+</html>

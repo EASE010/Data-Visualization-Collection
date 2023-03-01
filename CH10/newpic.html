@@ -1,0 +1,278 @@
+
+<html>
+    <meta charset="utf-8">
+	<center>
+	<style>
+  
+			.axis path,
+			.axis line{
+				fill: none;
+				stroke: black;
+				shape-rendering: crispEdges;
+			}
+			 
+			.axis text {
+				font-family: sans-serif;
+				font-size: 10px;
+			}
+			 
+	</style>
+			
+    <body>
+	
+	  <h2>Image color extraction based on K-Means clustering</h2>
+		<script src="ml.min.js" charset="utf-8"></script> 
+		<script src="https://cdn.bootcdn.net/ajax/libs/d3/5.0.0/d3.js" charset="utf-8"></script>
+		
+        <hr width=80%></hr>
+
+		<button id="blur" style="width:80px;height: auto;">Softening</button>
+
+        <button id="kmeans" >K-means Filling</button><br><br>
+
+		<canvas id="myCanvas" width="800" height="500"></canvas>
+
+        <p align="center" width="900px" id="1p"></p>
+
+        <script type="text/javascript">
+			var c=document.getElementById("myCanvas");
+			var cxt=c.getContext("2d");
+			var img=new Image()
+			img.src="RIO.jpg"
+
+			img.onload = function () {
+				cxt.drawImage(img,0,0);
+				var imageData = cxt.getImageData(0,0,c.width, c.height);
+				var idata = imageData.data;
+				
+                //dataMatrix
+				var DM=new Array(c.height);
+				var datargb=new Array(c.height*c.width);
+				
+                for(var i=0;i<c.height;i++){
+						DM[i]=new Array(c.width);
+						for(var j=0;j<c.width;j++){
+							DM[i][j]=new Array(4);
+							DM[i][j][0]=idata[(i*(c.width)+j)*4];
+							DM[i][j][1]=idata[(i*(c.width)+j)*4+1];
+							DM[i][j][2]=idata[(i*(c.width)+j)*4+2];
+							DM[i][j][3]=idata[(i*(c.width)+j)*4+3];
+							datargb[i*c.width+j]=new Array(3);
+							datargb[i*c.width+j][0]=idata[(i*(c.width)+j)*4];
+							datargb[i*c.width+j][1]=idata[(i*(c.width)+j)*4+1];
+							datargb[i*c.width+j][2]=idata[(i*(c.width)+j)*4+2];
+							//datargb[i*c.height+j][3]=idata[(i*(c.width)+j)*4+3];						
+						}
+				}
+				var cent=new Array(9);
+				console.log(datargb.length,datargb[0],datargb[500],datargb[3000]);
+				
+                //Color Clustering
+				for(var i=0;i<9;i++){
+					cent[i]=datargb[Math.floor(0.45*datargb.length)];
+					console.log(cent[i]);
+				}
+
+				var cc9 = ML.KMeans(datargb,9, {initialization: cent });
+				console.log(cc9);
+				console.log(cc9.centroids);
+				console.log(datargb.length);
+
+				var blurImage = function() {				
+					//9-grid averaging for softening blur
+					for(var i=0;i<c.height;i++){				
+						for(var j=0;j<c.width;j++){
+							if((i>0)&&(i<c.height-1)&&(j>0)&&(j<c.width-1)){				  
+							DM[i][j][0]=(DM[i-1][j-1][0]+DM[i-1][j][0]+DM[i-1][j+1][0]+DM[i][j-1][0]+DM[i][j][0]+DM[i][j+1][0]+DM[i+1][j-1][0]+DM[i+1][j][0]+DM[i+1][j+1][0])/9;
+							DM[i][j][1]=(DM[i-1][j-1][1]+DM[i-1][j][1]+DM[i-1][j+1][1]+DM[i][j-1][1]+DM[i][j][1]+DM[i][j+1][1]+DM[i+1][j-1][1]+DM[i+1][j][1]+DM[i+1][j+1][1])/9;
+							DM[i][j][2]=(DM[i-1][j-1][2]+DM[i-1][j][2]+DM[i-1][j+1][2]+DM[i][j-1][2]+DM[i][j][2]+DM[i][j+1][2]+DM[i+1][j-1][2]+DM[i+1][j][2]+DM[i+1][j+1][2])/9;
+							}
+						}
+					}
+					for(var i=0;i<c.height;i++){					
+						for(var j=0;j<c.width;j++){					
+							idata[(i*(c.width)+j)*4]=DM[i][j][0];
+							idata[(i*(c.width)+j)*4+1]=DM[i][j][1];
+							idata[(i*(c.width)+j)*4+2]=DM[i][j][2];	
+													idata[(i*(c.width)+j)*4+3]=DM[i][j][3];						
+						}
+					}
+					cxt.putImageData(imageData, 0, 0);
+				};	
+
+				var kmeansImage = function() {	
+					console.log(cc9.centroids[0].centroid);
+					console.log(cc9.centroids[0].centroid[0]);
+					//Filling with cluster centers
+					for(var i=0;i<c.height;i++){				
+						for(var j=0;j<c.width;j++){
+							if((i>0)&&(i<c.height-1)&&(j>0)&&(j<c.width-1)){
+								//Find the shortest distance
+								var shortindex=0;
+								var shortsum=0;
+								for (var k=0;k<7 ;k++ )
+								{
+									var dis1=Math.pow(DM[i][j][0]-cc9.centroids[k].centroid[0],2);
+									var dis2=Math.pow(DM[i][j][1]-cc9.centroids[k].centroid[1],2);
+									var dis3=Math.pow(DM[i][j][2]-cc9.centroids[k].centroid[2],2);
+									var dis=Math.sqrt(dis1+dis2+dis3);
+																if (k==0)
+																{
+										shortsum=dis;
+										shortindex=k;
+																}
+									else
+										if (shortsum>dis)
+										{
+										shortsum=dis;
+										shortindex=k;
+										}
+								}
+								DM[i][j][0]=Math.floor(cc9.centroids[shortindex].centroid[0]);
+								DM[i][j][1]=Math.floor(cc9.centroids[shortindex].centroid[1]);
+								DM[i][j][2]=Math.floor(cc9.centroids[shortindex].centroid[2]);
+							}
+						}
+					}
+					for(var i=0;i<c.height;i++){					
+						for(var j=0;j<c.width;j++){					
+							idata[(i*(c.width)+j)*4]=DM[i][j][0];
+							idata[(i*(c.width)+j)*4+1]=DM[i][j][1];
+							idata[(i*(c.width)+j)*4+2]=DM[i][j][2];	
+							idata[(i*(c.width)+j)*4+3]=DM[i][j][3];						
+						}
+					}
+					cxt.putImageData(imageData, 0, 0);
+				};	
+
+				var blurBtn = document.getElementById('blur');
+				blurBtn.addEventListener('click',blurImage);
+				var kmeansBtn = document.getElementById('kmeans');
+				kmeansBtn.addEventListener('click',kmeansImage);
+				
+				
+                var width=700;
+                var height=160;
+
+				var svg = d3.select("p")			
+								.append("svg")			
+								.attr("width", width)	
+								.attr("height", height*0.7);	
+				rectwidth=width/9;
+				
+                var rect = svg.selectAll("rect")
+									.data(cc9.centroids)		
+									.enter()			
+									.append("rect")	    
+									.attr("x", function(d,i){		
+										return  i*rectwidth+5;
+									})
+									.attr("y", function(d){		
+										return 30;
+									})
+									.attr("fill",function(d,i){
+										var r=Math.floor(d.centroid[0]);
+										var g=Math.floor(d.centroid[1]);
+										var b=Math.floor(d.centroid[2]);
+										return "rgb("+r+","+g+","+b+")"
+									})
+									.attr("width",rectwidth*0.9)
+									.attr("height",50)
+                                    .attr("rx",10)
+                                    .attr("ry",10);  
+					
+			
+
+				var width1  = 1000;	
+ 				var height1 = 500;	
+	 
+ 				var svg1 = d3.select("p")			
+			 					.append("svg")			
+			 					.attr("width", width1)	
+			 					.attr("height", height1);
+			 
+ 				var xAxisWidth = 700;
+  
+ 				var yAxisWidth = 440;
+			 
+ 				var xScale = d3.scaleBand()
+								 .domain(d3.range(9))
+								 .range([0,xAxisWidth]);
+  
+ 				var yScale = d3.scaleLinear()
+								 .domain([0,100])
+				 				.range([0,yAxisWidth]);			
+	 
+ 				var padding = { top: 40 , right: 40, bottom: 20, left: 145 };
+
+ 				var rect1 = svg1.selectAll("rect")
+				 				.data(cc9.centroids)		
+								.enter()
+								.append("rect")	
+								.attr("fill",function(d,i){
+										var r=Math.floor(d.centroid[0]);
+										var g=Math.floor(d.centroid[1]);
+										var b=Math.floor(d.centroid[2]);
+										return "rgb("+r+","+g+","+b+")"
+									})
+
+				 				.attr("x", function(d,i){		
+										 return padding.left + xScale(i);
+				 						})
+
+				 				.attr("y", function(d){		
+					 					return height1- padding.bottom - yScale(d.size/3592);
+				 						})
+				 				.attr("width",xScale.bandwidth())		
+				 				.attr("height",function(d){	
+								 return yScale(d.size/3592);
+				 					});
+									 
+				var text1 = svg1.selectAll("text")
+								 .data(cc9.centroids) 
+		 		
+			 	
+				 text1	
+				 	.enter()				
+				 	.append("text")			
+				 	.attr("fill","grey")
+				 	.attr("font-size","10px")
+				 	.attr("text-anchor","middle")
+
+				 	.attr("x", function(d,i){
+					 return padding.left + xScale(i)+28;
+				 })
+				 	.attr("y", function(d){
+					return height1- padding.bottom - yScale(d.size/3592)-12;
+				 })
+				 	.attr("dx",xScale.bandwidth()/9)
+				 	.attr("dy","0em")
+				 	.text(function(d,i){
+						var num =d.size/3592;
+						num = num.toFixed(2); 
+						return num+"%";
+				 });
+  
+  
+ 				var xAxis = d3.axisBottom(xScale);
+				 
+  
+ 				yScale.range([yAxisWidth,0]);
+				 
+ 				var yAxis = d3.axisLeft(yScale);
+				 
+ 				svg1.append("g")
+						 .attr("class","axis")
+						 .attr("transform","translate(" + padding.left + "," + (height1 - padding.bottom) +  ")")
+						 .call(xAxis);
+			 
+ 				svg1.append("g")
+		 			.attr("class","axis")
+		 			.attr("transform","translate(" + padding.left + "," + (height1 - padding.bottom - yAxisWidth) +  ")")
+		 			.call(yAxis); 					
+				}
+	
+      </script>
+		
+	</body></center>
+</html>

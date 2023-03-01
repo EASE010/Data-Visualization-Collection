@@ -1,0 +1,331 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+    <title>所有图</title>
+
+	<style>
+
+	
+	</style>
+
+    </head>
+    <body>  
+
+		
+		
+<div id="test-svg"></div>
+<!--<script src="d3.js"></script> 
+<script>
+		window.onload = function() {
+			var t=["总数","电影数","电视剧数"];
+			var datax = ['美国', '印度', '英国', '日本', '韩国', '中国'];
+			var datay = [
+				[2770,966,403,241,193,66],
+				[2052,888,206,76,40,28],
+				[718,78,197,165,153,38]
+			];
+			// 用来保存点击时的状态
+			var legendStatus = [true, true, true];
+			
+			var width = 800,
+				height = 400,
+				padding = {
+					top: 40,
+					right: 40,
+					bottom: 40,
+					left: 40
+				};
+			var sp =["#CD5C5C","#663433","#BA2028"];
+			var svg = d3.select("#test-svg")
+				.append('svg')
+				.attr('width', width + 'px')
+				.attr('height', height + 'px');
+				
+			// x轴
+			var xScale = d3.scaleOrdinal()
+				.domain(datax)
+				.range([100, 200, 300, 400, 500, 600]);
+			var xAxis = d3.axisBottom()
+				.scale(xScale)
+				.tickSize(10);
+			svg.append('g')
+				.call(xAxis)
+				.attr("transform", "translate(0," + (height - padding.bottom) + ")")
+				.selectAll("text")
+				.attr("dx", "50px");
+				
+			// y轴      
+			var yScale = d3.scaleLinear()
+				.domain([0, d3.max(d3.merge([datay[0], datay[1], datay[2]]))])
+				.range([height - padding.bottom, padding.top]);
+			var yAxis = d3.axisLeft()
+				.scale(yScale)
+				.ticks(10);
+			svg.append('g')
+				.call(yAxis)
+				.attr("transform", "translate(" + 100 + ",0)");
+            
+          
+            
+			datay.forEach(function(item, index) {
+				var bar = svg.selectAll(".bar" + index)
+					.data(item)
+					.enter().append("g")
+					.attr("class", "bar" + index)
+					.attr("transform", function(d, i) {
+						var _d = (100 / datay.length) * (index);
+						return "translate(" + (xScale(i * 100) + _d) + "," + yScale(d) + ")";
+					});
+				
+				// 柱
+				bar.append("rect")
+					.attr("x", 1)
+					.attr("width", (100 / datay.length))
+					.attr("height", function(d) {
+						return height - yScale(d) - padding.bottom;
+					})
+					.attr("stroke", "White")
+					.attr("fill", sp[index]);
+					
+				bar.append("text")
+					.attr("dy", ".75em")
+					.attr("y", -8)
+					.attr("x", 100 / (datay.length * 2))
+					.attr("text-anchor", "middle")
+					.attr("font-size", "8px")
+					.attr("fill", "Black")
+					.text(function(d) {
+						return d;
+					});
+				
+				// 图例
+				
+				var legend = svg.append('g');
+				var line = legend.append('line')
+					.attr('x1', 0)
+					.attr('y1', 2)
+					.attr('x2', 15)
+					.attr('y2', 2)
+					.attr('stroke', sp[index])
+					.attr('stroke-width', 5);
+				var text = legend.append('text')
+					.attr('class', 'legend-label')
+					.attr("dy", -13)
+					.style("text-anchor", "start")
+					.text(t[index])
+					.attr('fill', "Black")
+					.attr('font-size', '13')
+					.attr("transform", "translate(" + 18 + "," + 20 + ")");
+				// 图例对应的点击事件	
+				legend.attr("transform", "translate(" + (padding.left * 3 + index * 100) + "," + padding.top / 2 + ")");
+			});
+		
+	
+		
+//图二		
+			var t1=["总数","电影数","电视剧数"];
+			var datax1 = ['美国', '日本','英国',  '加拿大','澳大利亚', '中国'];
+			var datay1 = [
+				[902,259,110,58,20,0],
+				[517,26,57,4,0,0],
+				[385,233,53,54,20,0]
+			];
+			// 用来保存点击时的状态
+			//var legendStatus1 = [true, true, true];
+			
+			var padding1 = {
+					top: 40,
+					right: 40,
+					bottom: 40,
+					left: 40
+				};
+			var sp1 = ["#006400","#426734","#60B921"];	
+			var svg1 = d3.select("#test-svg")
+				.append('svg')
+				.attr('width', width + 'px')
+				.attr('height', height + 'px');
+				
+			// x轴
+			var xScale1 = d3.scaleOrdinal()
+				.domain(datax1)
+				.range([100, 200, 300, 400, 500, 600]);
+			var xAxis1 = d3.axisBottom()
+				.scale(xScale1)
+				.tickSize(10);
+			svg1.append('g')
+				.call(xAxis1)
+				.attr("transform", "translate(0," + (height - padding1.bottom) + ")")
+				.selectAll("text")
+				.attr("dx", "50px");
+				
+			// y轴      
+			var yScale1 = d3.scaleLinear()
+				.domain([0, d3.max(d3.merge([datay1[0], datay1[1], datay1[2]]))])
+				.range([height - padding1.bottom, padding1.top]);
+			var yAxis1 = d3.axisLeft()
+				.scale(yScale1)
+				.ticks(10);
+			svg1.append('g')
+				.call(yAxis1)
+				.attr("transform", "translate(" + 100 + ",0)");
+            
+          
+            
+			datay1.forEach(function(item, index) {
+				var bar1 = svg1.selectAll(".bar" + index)
+					.data(item)
+					.enter().append("g")
+					.attr("class", "bar" + index)
+					.attr("transform", function(d, i) {
+						var _d = (100 / datay1.length) * (index);
+						return "translate(" + (xScale1(i * 100) + _d) + "," + yScale1(d) + ")";
+					});
+				
+				// 柱
+				bar1.append("rect")
+					.attr("x", 1)
+					.attr("width", (100 / datay1.length))
+					.attr("height", function(d) {
+						return height - yScale1(d) - padding1.bottom;
+					})
+					.attr("stroke", "White")
+					.attr("fill", sp1[index]);
+					
+				bar1.append("text")
+					.attr("dy", ".75em")
+					.attr("y", -8)
+					.attr("x", 100 / (datay1.length * 2))
+					.attr("text-anchor", "middle")
+					.attr("font-size", "8px")
+					.attr("fill", "Black")
+					.text(function(d) {
+						return d;
+					});
+				
+				// 图例
+				
+				var legend1 = svg1.append('g');
+				var line1 = legend1.append('line')
+					.attr('x1', 0)
+					.attr('y1', 2)
+					.attr('x2', 15)
+					.attr('y2', 2)
+					.attr('stroke', sp1[index])
+					.attr('stroke-width', 5);
+				var text1 = legend1.append('text')
+					.attr('class', 'legend-label')
+					.attr("dy", -13)
+					.style("text-anchor", "start")
+					.text(t1[index])
+					.attr('fill', "Black")
+					.attr('font-size', '13')
+					.attr("transform", "translate(" + 18 + "," + 20 + ")");
+				// 图例对应的点击事件	
+				legend1.attr("transform", "translate(" + (padding1.left * 3 + index * 100) + "," + padding1.top / 2 + ")")
+			});
+		}
+	</script>-->
+
+
+	<div id="svg_one"></div>
+	<div id='tooltip' style='position:absolute;background-color:lightgray;padding:5px'></div>
+	<script type="text/javascript" src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+        <script>
+			var w = 1000,
+				h = 600,
+				margin = { top: 60, right: 120, bottom: 30, left: 80 };
+				
+			var svg = d3.select("#svg_one")
+				.append('svg')
+				.attr('width', w + 'px')
+				.attr('height', h + 'px');
+        // Define margins, dimensions, and some line colors
+        var width = 1000 - margin.left - margin.right;
+       var height = 600 - margin.top - margin.bottom;
+
+        // Define the scales and tell D3 how to draw the line
+        var x = d3.scaleLinear().domain([2006, 2021])
+            .range([0, width]);
+        var y = d3.scaleLinear().domain([0, 1400]).range([height, 0]);
+        var line = d3.line().x(d => x(d.year)).y(d => y(d.population));
+
+        var chart = d3.select('svg').append('g')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+        var tooltip = d3.select('#tooltip');
+        var tooltipLine = chart.append('line');
+
+        // Add the axes and a title
+        var xAxis = d3.axisBottom(x).tickFormat(d3.format('.4'));
+        var yAxis = d3.axisLeft(y).tickFormat(d3.format('.2s'));
+        chart.append('g').call(yAxis);
+        chart.append('g').attr('transform', 'translate(0,' + height + ')').call(xAxis);
+       
+
+        // Load the data and draw a chart
+        var states, tipBox;
+        d3.json('c.json').then(function (d) {
+            states = d;
+
+            chart.selectAll()
+                .data(states).enter()
+                .append('path')
+                .attr('fill', 'none')
+                .attr('stroke', d => d.color)
+                .attr('stroke-width', 3)
+                .datum(d => d.history)
+                .attr('d', line);
+
+            chart.selectAll()
+                .data(states).enter()
+                .append('text')
+                .html(d => d.name)
+                .attr('fill', d => d.color)
+                .attr('alignment-baseline', 'middle')
+                .attr('x', width)
+                .attr('dx', '.6em')
+                .attr('y', d => y(d.currentPopulation));
+
+            tipBox = chart.append('rect')
+                .attr('width', width)
+                .attr('height', height)
+                .attr('opacity', 0)
+                .on('mousemove', drawTooltip)
+                .on('mouseout', removeTooltip);
+        });
+
+        function removeTooltip() {
+            if (tooltip) tooltip.style('display', 'none');
+            if (tooltipLine) tooltipLine.attr('stroke', 'none');
+        }
+
+        function drawTooltip() {
+
+            const year = Math.floor(x.invert(d3.mouse(tipBox.node())[0])+0.5);
+
+            states.sort((a, b) => {
+                return b.history.find(h => h.year == year).population - a.history.find(h => h.year == year).population;
+            })
+
+            tooltipLine.attr('stroke', 'black')
+                .attr('x1', x(year))
+                .attr('x2', x(year))
+                .attr('y1', 0)
+                .attr('y2', height);
+
+
+            tooltip.html(year)
+                .style('display', 'block')
+                .style('left', d3.event.pageX + 20 + 'px')
+                .style('top', d3.event.pageY - 20 + 'px')
+                .selectAll()
+                .data(states).enter()
+                .append('div')
+                .style('color', d => d.color)
+                .html(d => d.name + ': ' + d.history.find(h => h.year == year).population);
+        }
+	
+    </script>
+    </body>
+
+</html>

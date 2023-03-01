@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+path.slice{
+	stroke-width:2px;
+}
+polyline{
+	opacity: .3;
+	stroke: black;
+	stroke-width: 2px;
+	fill: none;
+} 
+svg text.percent{
+	fill:black;
+	text-anchor:middle;
+	font-size:12px;
+}
+
+</style>
+<body>
+<script src="d3.v3.min.js"></script>
+<script src="Donut3D.js"></script>
+<script>
+
+var salesData=[
+	{label:"剧情", value:23.0,color:"#B9D3EE"},
+	{label:"喜剧", value:21.0,color:"#4F94CD"},
+	{label:"战争", value:18.0,color:"#4876FF"},
+	{label:"动画", value:15.0,color:"#ADD8E6"},
+	{label:"动作", value:13.0,color:"#D3D3D3"},
+	{label:"爱情", value:5.0,color:"#E6E6FA"},
+	{label:"其他", value:5.0,color:"#EED8AE"}
+];
+	
+
+var svg = d3.select("body").append("svg").attr("width",900).attr("height",400);
+
+svg.append("g").attr("id","salesDonut");
+
+Donut3D.draw("salesDonut", getData1(), 620, 200, 160, 120, 50, 0.4);
+	
+
+function getData1(){
+	
+	return salesData.map(
+		function(d){ 
+		return {label:d.label, value:d.value, color:d.color};
+		}
+	);
+}
+	
+	
+</script>
+	
+	<table style="margin: 0 auto;">
+ <tr>
+  <td bgcolor="#B9D3EE" height="25" width="50">&nbsp;</td>
+  <td>&nbsp;&nbsp;剧情&nbsp;&nbsp;</td>
+	 
+  <td bgcolor="#4F94CD" height="25" width="50">&nbsp;</td>
+  <td>&nbsp;&nbsp;喜剧&nbsp;&nbsp;</td>
+	 
+<td bgcolor="#4876FF" height="25" width="50">&nbsp;</td>
+  <td>&nbsp;&nbsp;战争&nbsp;&nbsp;</td> 
+	 
+<td bgcolor="#ADD8E6" height="25" width="50">&nbsp;</td>
+  <td>&nbsp;&nbsp;动画&nbsp;&nbsp;</td>
+  <td bgcolor="#D3D3D3" height="25" width="50">&nbsp;</td>
+  <td>&nbsp;&nbsp;动作</td>	
+	 
+<td bgcolor="#E6E6FA" height="25" width="50">&nbsp;</td>
+  <td>&nbsp;&nbsp;爱情&nbsp;&nbsp;</td>
+  <td bgcolor="#EED8AE" height="25" width="50">&nbsp;</td>
+  <td>&nbsp;&nbsp;其他</td>		 
+ 
+ </tr>
+</table>
+<br><br><br>
+
+<div style="position: absolute;left: 34%;">2021年我国各题材电影票房占比（来源：艺恩智库）<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;19数科姜力菲</div>
+	
+	
+	
+</body>

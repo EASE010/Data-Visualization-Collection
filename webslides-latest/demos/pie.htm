@@ -1,0 +1,144 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+    <title>饼状图</title>
+    </head>
+    <body>  
+	
+	<div id="_svg"></div>
+        <script src="d3.v3.js"></script> 
+        <script> 
+            var w=400;
+            var h=300;
+            var svg2=d3.select("#_svg")
+                    .append('svg')
+                    .attr("width",w)
+                    .attr("height",h);
+            
+            var dataset=[["Movies 5667",72.2],["Series 2186",27.8]];
+            var pie=d3.layout.pie()
+                        .value(function(d){return d[1];});
+            var piedata=pie(dataset);
+            var arc=d3.svg.arc()
+                            .innerRadius(60)
+                            .outerRadius(130)
+
+            var arcs=svg2.selectAll("g")
+                        .data(piedata)
+                        .enter()
+                        .append("g")
+                        .attr("transform","translate("+(w/2)+","+(h/2)+")");
+            arcs.append("path")
+                .attr("d",function(d){
+                    return arc(d)
+                })
+                .attr("fill","#663433")
+                .attr("stroke","white")
+                .on("mouseover",function(d){
+                    d3.select(this)
+                        .attr("fill","#BA2028")
+                })
+                .on("mouseout",function(d){
+                    d3.select(this)
+                        .attr("fill","#663433")
+                });            
+            svg2.selectAll("text")
+                .data(piedata)
+                .enter()
+                .append("text")
+                .attr("fill","white")
+                .attr("text-anchor","middle")
+                .attr("transform",function(d){
+                    var x=arc.centroid(d)[0];
+                    var y=arc.centroid(d)[1];
+                    return "translate("+(w/2+x)+","+(h/2+y)+")";
+                })
+                .text(function(d){return d.value+"%"});
+            arcs.append("line")
+                .attr("stroke","white")
+                .attr("x1",function(d){ return arc.centroid(d)[0]*1.4;})
+                .attr("y1",function(d){ return arc.centroid(d)[1]*1.4;})
+                .attr("x2",function(d){ return arc.centroid(d)[0]*1.7;})
+                .attr("y2",function(d){ return arc.centroid(d)[1]*1.7;});
+
+            arcs.append("text")
+                .attr("fill","white")
+                .attr("transform",function(d){
+                    var x=arc.centroid(d)[0]*2;
+                    var y=arc.centroid(d)[1]*1.8;
+                    return "translate("+x+","+y+")";
+                })
+                .attr("text-anchor","middle")
+                .text(function(d){
+                    return d.data[0];
+                });
+
+                
+                //图二
+var svg1=d3.select("#_svg")
+                    .append('svg')
+                    .attr("width",w)
+                    .attr("height",h);
+            
+            var dataset1=[["Movies 660",41.6],["Series 927",58.4]];
+            var pie1=d3.layout.pie()
+                        .value(function(d){return d[1];});
+            var piedata1=pie1(dataset1);
+            var arc1=d3.svg.arc()
+                            .innerRadius(20)
+                            .outerRadius(80)
+
+            var arcs1=svg1.selectAll("g")
+                        .data(piedata1)
+                        .enter()
+                        .append("g")
+                        .attr("transform","translate("+(w/2)+","+(h/2)+")");
+            arcs1.append("path")
+                .attr("d",function(d){
+                    return arc1(d)
+                })
+                .attr("fill","#426734")
+                .attr("stroke","white")
+                .on("mouseover",function(d){
+                    d3.select(this)
+                        .attr("fill","#60B921")
+                })
+                .on("mouseout",function(d){
+                    d3.select(this)
+                        .attr("fill","#426734")
+                });            
+            svg1.selectAll("text")
+                .data(piedata1)
+                .enter()
+                .append("text")
+                .attr("fill","white")
+                .attr("text-anchor","middle")
+                .attr("transform",function(d){
+                    var x=arc1.centroid(d)[0];
+                    var y=arc1.centroid(d)[1];
+                    return "translate("+(w/2+x)+","+(h/2+y)+")";
+                })
+                .text(function(d){return d.value+"%"});
+            arcs1.append("line")
+                .attr("stroke","white")
+                .attr("x1",function(d){ return arc1.centroid(d)[0]*1.7;})
+                .attr("y1",function(d){ return arc1.centroid(d)[1]*1.7;})
+                .attr("x2",function(d){ return arc1.centroid(d)[0]*1.4;})
+                .attr("y2",function(d){ return arc1.centroid(d)[1]*1.4;});
+
+            arcs1.append("text")
+                .attr("fill","white")
+                .attr("transform",function(d){
+                    var x=arc1.centroid(d)[0]*2.8;
+                    var y=arc1.centroid(d)[1]*3.1;
+                    return "translate("+x+","+y+")";
+                })
+                .attr("text-anchor","middle")
+                .text(function(d){
+                    return d.data[0];
+                });
+				
+        </script>
+    </body>
+
+</html>

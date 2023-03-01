@@ -1,0 +1,232 @@
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>直方图</title>
+	</head>
+<style>
+.domain,.tick line{
+    stroke: white;
+    stroke-width: 1;
+}
+.domain,.tick text{
+		color: white;
+        font-family: sans-serif;
+        font-size: 11px;
+     }
+</style>
+	<body>
+		<div id="test-svg"></div>
+	<script src="d3.js"></script>
+	<script>
+		window.onload = function() {
+			var t=["Total","Movies","Series"];
+			var datax = ['US', 'India', 'UK', 'Japan', 'Korea', 'China'];
+			var datay = [
+				[2770,966,403,241,193,66],
+				[2052,888,206,76,40,28],
+				[718,78,197,165,153,38]
+			];
+			// 用来保存点击时的状态
+			var legendStatus = [true, true, true];
+			
+			var width = 585,
+				height = 400,
+				padding = {
+					top: 40,
+					right: 0,
+					bottom: 40,
+					left: 40
+				};
+			var sp =["#CD5C5C","#663433","#BA2028"];
+			var svg = d3.select("#test-svg")
+				.append('svg')
+				.attr('width', width + 'px')
+				.attr('height', height + 'px');
+				
+			// x轴
+			var xScale = d3.scaleOrdinal()
+				.domain(datax)
+				.range([100, 180, 260, 340, 420, 500]);
+			var xAxis = d3.axisBottom()
+				.scale(xScale)
+				.tickSize(10);
+			svg.append('g')
+				.call(xAxis)
+				.attr("transform", "translate(0," + (height - padding.bottom ) + ")")
+				.selectAll("text")
+				.attr("dx", "40px")
+				.attr("fill", "white");
+				
+			// y轴      
+			var yScale = d3.scaleLinear()
+				.domain([0, d3.max(d3.merge([datay[0], datay[1], datay[2]]))])
+				.range([height - padding.bottom, padding.top]);
+			var yAxis = d3.axisLeft()
+				.scale(yScale)
+				.ticks(10);
+			svg.append('g')
+				.call(yAxis)
+				.attr("transform", "translate(" + 100 + ",0)");
+          
+            
+			datay.forEach(function(item, index) {
+				var bar = svg.selectAll(".bar" + index)
+					.data(item)
+					.enter().append("g")
+					.attr("class", "bar" + index)
+					.attr("transform", function(d, i) {
+						var _d = (80 / datay.length) * (index);
+						return "translate(" + (xScale(i * 100) + _d) + "," + yScale(d) + ")";
+					});
+				
+				// 柱
+				bar.append("rect")
+					.attr("x", 1)
+					.attr("width", (80 / datay.length))
+					.attr("height", function(d) {
+						return height - yScale(d) - padding.bottom;
+					})
+					.attr("stroke", "White")
+					.attr("fill", sp[index]);
+					
+				bar.append("text")
+					.attr("dy", ".75em")
+					.attr("y", -8)
+					.attr("x", 80 / (datay.length * 2))
+					.attr("text-anchor", "middle")
+					.attr("font-size", "8px")
+					.attr("fill", "white")
+					.text(function(d) {
+						return d;
+					});
+				
+				// 图例
+				
+				var legend = svg.append('g');
+				var line = legend.append('line')
+					.attr('x1', 0)
+					.attr('y1', 2)
+					.attr('x2', 15)
+					.attr('y2', 2)
+					.attr('stroke', sp[index])
+					.attr('stroke-width', 5);
+				var text = legend.append('text')
+					.attr('class', 'legend-label')
+					.attr("dy", -13)
+					.style("text-anchor", "start")
+					.text(t[index])
+					.attr('fill', "white")
+					.attr('font-size', '13')
+					.attr("transform", "translate(" + 18 + "," + 20 + ")");
+				// 图例对应的点击事件	
+				legend.attr("transform", "translate(" + (padding.left * 3 + index * 100) + "," + padding.top / 2 + ")");
+			});
+		
+	
+		
+//图二		
+			var t1=["Total","Movies","Series"];
+			var datax1 = ['US', 'Japan','UK',  'Canada','Australia', 'China'];
+			var datay1 = [
+				[902,259,110,58,20,0],
+				[517,26,57,4,0,0],
+				[385,233,53,54,20,0]
+			];
+			// 用来保存点击时的状态
+			//var legendStatus1 = [true, true, true];
+			
+			var padding1 = {
+					top: 40,
+					right: 40,
+					bottom: 40,
+					left: 40
+				};
+			var sp1 = ["#006400","#426734","#60B921"];	
+			var svg1 = d3.select("#test-svg")
+				.append('svg')
+				.attr('width', width + 'px')
+				.attr('height', height + 'px');
+				
+			// x轴
+			var xScale1 = d3.scaleOrdinal()
+				.domain(datax1)
+				.range([100, 180, 260, 340, 420, 500]);
+			var xAxis1 = d3.axisBottom()
+				.scale(xScale1)
+				.tickSize(10);
+			svg1.append('g')
+				.call(xAxis1)
+				.attr("transform", "translate(0," + (height - padding1.bottom) + ")")
+				.selectAll("text")
+				.attr("dx", "40px")
+				.attr("fill", "white");
+				
+			// y轴      
+			var yScale1 = d3.scaleLinear()
+				.domain([0, d3.max(d3.merge([datay1[0], datay1[1], datay1[2]]))])
+				.range([height - padding1.bottom, padding1.top]);
+			var yAxis1 = d3.axisLeft()
+				.scale(yScale1)
+				.ticks(10);
+			svg1.append('g')
+				.call(yAxis1)
+				.attr("transform", "translate(" + 100 + ",0)");
+            
+          
+            
+			datay1.forEach(function(item, index) {
+				var bar1 = svg1.selectAll(".bar" + index)
+					.data(item)
+					.enter().append("g")
+					.attr("class", "bar" + index)
+					.attr("transform", function(d, i) {
+						var _d = (80 / datay1.length) * (index);
+						return "translate(" + (xScale1(i * 100) + _d) + "," + yScale1(d) + ")";
+					});
+				
+				// 柱
+				bar1.append("rect")
+					.attr("x", 1)
+					.attr("width", (80 / datay1.length))
+					.attr("height", function(d) {
+						return height - yScale1(d) - padding1.bottom;
+					})
+					.attr("stroke", "White")
+					.attr("fill", sp1[index]);
+					
+				bar1.append("text")
+					.attr("dy", ".75em")
+					.attr("y", -8)
+					.attr("x", 80 / (datay1.length * 2))
+					.attr("text-anchor", "middle")
+					.attr("font-size", "8px")
+					.attr("fill", "white")
+					.text(function(d) {
+						return d;
+					});
+				
+				// 图例
+				
+				var legend1 = svg1.append('g');
+				var line1 = legend1.append('line')
+					.attr('x1', 0)
+					.attr('y1', 2)
+					.attr('x2', 15)
+					.attr('y2', 2)
+					.attr('stroke', sp1[index])
+					.attr('stroke-width', 5);
+				var text1 = legend1.append('text')
+					.attr('class', 'legend-label')
+					.attr("dy", -13)
+					.style("text-anchor", "start")
+					.text(t1[index])
+					.attr('fill', "white")
+					.attr('font-size', '13')
+					.attr("transform", "translate(" + 18 + "," + 20 + ")");
+				// 图例对应的点击事件	
+				legend1.attr("transform", "translate(" + (padding1.left * 3 + index * 100) + "," + padding1.top / 2 + ")")
+			});
+		}
+	</script>
+</html>

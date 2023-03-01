@@ -1,0 +1,94 @@
+{
+      "name": "分类",
+      "children": [
+      
+{
+        "name": "喜剧",
+        "children": [
+         {"name": "真人秀", "size":21},
+         {"name": "复古", "size": 16},
+         {"name": "校园", "size": 14},
+         {"name": "悬疑", "size": 11},
+         {"name": "爱情", "size": 17},
+         {"name": "体育", "size": 7}
+        ]
+       },
+
+{
+        "name": "惊悚悬疑",
+        "children": [
+         {"name": "奇幻", "size": 6},
+         {"name": "犯罪", "size": 12},
+         {"name": "复古", "size": 16},
+         {"name": "恐怖", "size":8 },
+         {"name": "小说改编", "size":7 }
+        ]
+       },
+       
+ {
+        "name": "复古",
+        "children": [
+         {"name": "喜剧", "size": 51},
+         {"name": "剧情", "size":37},
+         {"name": "家庭", "size": 18},
+         {"name": "犯罪", "size": 24},
+         {"name": "爱情", "size":27 },
+         {"name": "校园", "size": 20}
+        ]
+       },
+   
+
+       {
+        "name": "社会",
+        "children": [
+         {"name": "生活", "size": 20},
+         {"name": "种族", "size": 12},
+         {"name": "教育", "size": 23},
+         {"name": "职场", "size": 16},
+         {"name": "寓言", "size": 6}
+        ]
+       },
+
+
+
+
+
+      
+
+{
+            "name": "剧情",
+            "children": [
+             {"name": "医疗卫生", "size": 13},
+             {"name": "小说改编", "size": 16},
+             {"name": "科幻", "size": 6},
+             {"name": "悬疑", "size": 14},
+             {"name": "法律", "size": 8}
+            ]
+           },
+
+{
+        "name": "附加频道",
+        "children": [
+         {"name": "ESPN", "size": 14},
+         {"name": "Spotify", "size": 13},
+         {"name": "HBO MAX", "size": 17}
+        ]
+       },
+
+       {
+        "name": "纪录片",
+        "children": [
+         {"name": "自然", "size": 7},
+         {"name": "人文", "size": 9},
+         {"name": "社会", "size": 10}
+        ]
+       } 
+          
+
+
+
+
+
+      ]
+       }
+    

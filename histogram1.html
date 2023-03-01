@@ -1,0 +1,91 @@
+<html>  
+  <head>  
+        <meta charset="utf-8">  
+        
+  </head> 
+  <body>
+	  <div>2020-2021世界各国城镇人口增长率（%%）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;来源：世界银行  2022-2-15<br>19数科姜力菲</div>
+	<script src="d3.v3.min.js" charset="utf-8"></script> 
+	<script>  
+		
+		var width=(window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth)*0.97;
+		var height=(window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight)*0.9;
+		var color = d3.scale.category10();
+
+		
+		var dataset =new Array(33.54,13.94,37.41,9.99,31.78,11.87,20.66,4.30,5.41,2.77,22.97,25.99,16.06,18.76,1.43,40.10,8.38,1.30,22.12,47.47,43.71,35.82,26.75,17.62,20.15,7.65,10.29,56.75,15.17,8.65,5.99,28.30,18.09,0.14);
+		
+		var names=new Array("阿富汗","澳大利亚","巴林","巴西","柬埔寨","加拿大","中国","丹麦","法国","德国","印度","伊拉克","爱尔兰","以色列","意大利","肯尼亚","朝鲜","韩国","卢森堡","马里","莫桑比克","阿曼","巴基斯坦","卡塔尔","南非","西班牙","瑞典","乌干达","阿联酋","英国","美国","越南","世界平均","俄罗斯");
+		
+		
+		
+		var svg = d3.select("body")			//选择<body>
+					.append("svg")			//在<body>中添加<svg>
+					.attr("width", width)	//设定<svg>的宽度属性
+					.attr("height", height);//设定<svg>的高度属性				
+		
+		//矩形所占的宽度（包括空白），单位为像素		
+		var rectStep =width/dataset.length;
+		
+		//矩形所占的宽度（不包括空白），单位为像素
+		var rectWidth =rectStep-10; 	
+		
+		var rect = svg.selectAll("rect")
+						.data(dataset)		//绑定数据
+						.enter()			//获取enter部分
+						.append("rect")	    //添加rect元素，使其与绑定数组的长度一致
+						.attr("x", function(d,i){		//设置矩形的x坐标
+							return i * rectStep;
+						})
+						.attr("y", function(d){		//设置矩形的y坐标
+							return height-d*8-15;
+						})
+						.attr("fill", function(i){
+							return color(i);
+						})
+						.attr("width",rectWidth)		//设置矩形的宽度
+						.attr("height",function(d){	//设置矩形的高度
+							return d*8;
+						});	
+		
+      var text = svg.selectAll("text")
+				.data(dataset)			//绑定数据
+				.enter()				//获取enter部分
+				.append("text")			//添加text元素，使其与绑定数组的长度一致
+				.attr("fill","grey")
+				.attr("font-size","11px")
+				.attr("text-anchor","middle")
+				.attr("x", function(d,i){
+					return i * rectStep;
+				})
+				.attr("y", function(d){
+					return height-d*8-35;
+				})
+				.attr("dx",rectWidth/2)
+				.attr("dy","1em")
+				.text(function(d){
+					return d;
+				});
+		
+		var text2 = svg.selectAll("text2")
+				.data(names)			//绑定数据
+				.enter()				//获取enter部分
+				.append("text")			//添加text元素，使其与绑定数组的长度一致
+				.attr("fill","grey")
+				.attr("font-size","9px")
+				.attr("text-anchor","middle")
+				.attr("x", function(d,i){
+					return i * rectStep;
+				})
+				.attr("y", function(d){
+					return height-12;
+				})
+				.attr("dx",rectWidth/2)
+				.attr("dy","1em")
+				.text(function(d){
+					return d;
+				});
+						
+	</script> 
+  </body>
+</html>

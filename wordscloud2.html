@@ -1,0 +1,50 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>word</title>
+    <script src="d3.v3.min.js" charset="utf-8"></script>
+    <script src="js2wordcloud.min.js"></script>
+	<style>
+		html{
+			background-color:#000000;
+		}
+	</style>
+</head>
+<body>
+	<br>
+	<a href="https://cuc.yingshinet.com/CH12/renminWC.htm">
+	<img style="width: 150px;height: 75px;position: absolute;left: 260px;top: 20px;" src="Hulusign.png"></a>
+	<div id="headline" style="color: whitesmoke; text-align: center; margin:15px auto;width: 500px;height: 40px;font-size: 27px;font-weight: 700;">烂番茄网站94部HULU评分最高剧集</div>
+	<p style="color: aliceblue;" align="center">19数科 姜力菲</p>
+	
+	<br>
+	
+    <div id="cloud" style="margin:0 auto; width:1160px;height:370px;background-color: #000000"></div><br><br>
+	<div style="color: whitesmoke; margin:30px auto;width: 850px;height: 400px;font-size: 17px;">Hulu是由NBC环球、新闻集团以及迪士尼联合投资的视频网站。Hulu的目标是帮助用户在任意时刻、地点及方式查找并欣赏专业的媒体内容。其内容包括电视剧、电影和剪辑，主要来自于超过200个内容提供商，包括福克斯、NBC、迪斯尼、ABC、华纳兄弟、米高梅公司、狮门公司和索尼等。<br>随着其2008年3月在美国的公开发布，Hulu已经被业界公认为最具前途的“在线体验电视的新途径”。<br><br><br>在知名影视评分网站“烂番茄”上，Hulu最受好评的剧集当属其于2021年发布的10集原创自制剧《公寓大楼里的谋杀案（Only Murders in the Building）》<br>这部设定在纽约的都市犯罪类喜剧在烂番茄上收获了100%的观众好评认证，截至目前，这部剧已经斩获了第79届金球奖电视类最佳音喜类剧集、第28届美国演员工会奖喜剧类剧集最佳群戏、第74届美国编剧工会奖喜剧类剧集最佳剧本、第12届美国评论家选择电视奖喜剧类最佳剧集等多项提名，并将在今年夏天继续对第74届黄金时段艾美奖喜剧类最佳剧集发起冲击。<br><br><br>除此之外，Hulu已经基本确定了今年将对艾美奖最佳限定类剧集发起冲击的阵容：《成瘾剂量（Dopesick）》、《帕姆与汤米（Pam and Tommy）》、《辍学生（The Dropout）》、《来自普赖恩维尔的女孩（The girl from Plainville）》、《坎迪（Candy）》、《聊天记录（Conversation with Friends）》</div>
+    <script>
+        var data=[["OMITB*",100],["BETTER THINGS",98],["ATLANTA",97],["R*DOGS",98],["JUSTIFIED",97],["WWDITS*",97],["PEN15",97],["HARLOTS",97],["MCCARTNEY",97],["N.T.",97],["MRS.A",97],["RAMY",96],["D.PEOPLE",96],["SOLAR OPPOSITES",96],["YRTW*",95],["L.VICTOR",95],["TWM*",95],["MR.I",95],["IASIP*",94],["GREAT",94],["MSW*",94],["LEGIT",94],["ACCIDENT",93],["FARGO",93],["WILFRED",83],["LYAWS*",93],["CASUAL",92],["BKS",92],["SSQT*",92],["TRIERS",92],["LEGION",91],["NP*",91],["DAMAGES",91],["TWU*",91],["FUTUREM",91],["BDS",91],["LFA*",91],["ARCHER",90],["SHIELD",90],["ANIM.",90],["CSR*",90],["RESCUEM",89],["STAGED",89],["C.ROCK",88],["D.OUT",90],["DOP",88],["TLT*",88],["ACT",88],["MODOK.",88],["L&B",91],["SOA*",87],["SHRILL",88],["SF*",87],["TMP*",86],["HF*",86],["M M.C.",86],["RICHES",86],["RA*",85],["DASBOOT",85],["C-22",84],["TNYTP*",84],["DAVE",84],["HMAID*",83],["112263",83],["DEVS",82],["M.LAND",82],["F/V",81],["UR*",81],["LEAGUE",81],["THIEF",81],["HILLARY",79],["H-M",81],["D404",80],["STRAIN",79],["P&T",79],["LFE*",79],["TRUST",78],["AHS*",77],["PATH",77],["TABOO",76],["Y:TLM*",76],["CHANCE",75],["TMDAOA*",75],["WOKE",74],["WUTANG",74],["TEACHER",73],["ITD*",69],["FIRST",66],["AWOE",64],["S&D&R&R",61],["TYRANT",60]];
+        
+		var option = {fontSizeFactor: 1, 
+                      maxFontSize: 28, 
+                      minFontSize: 10, 
+                      gridSize:0, 
+                      fontWeight:550,  
+                      fontFamily: "Gill Sans", 
+                      backgroundColor:'#000', 
+                      origin:[0,100],
+                      //备注显示框
+                      tooltip: {show:true, 
+                         backgroundColor: 'black', 
+                         formatter: function(item) { 
+                             return item[0] + ' get ' + item[1] + '% good'}
+                         },
+                         list: data,
+                         color: '#1ce783',
+                         imageShape: 'hulu.png'};
+        var wc = new Js2WordCloud(document.getElementById('cloud'));
+        wc.setOption(option);
+    </script>
+</body>
+</html>

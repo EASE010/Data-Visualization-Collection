@@ -1,0 +1,244 @@
+<html>  
+<meta charset="utf-8">
+  <head>      
+	<title>
+		The relationship between American media companies and streaming platforms
+	</title>
+		 <style>
+			path{
+			  fill: none;
+			  stroke: whitesmoke;
+			  stroke-width: 1.5px;
+			}
+			
+			 circle {
+			  stroke: whitesmoke;
+			  stroke-width: 1.5px;
+			}
+			 
+			text {
+			  font: 10px sans-serif;
+			  pointer-events: none;
+			}
+			 
+			.tooltip{  
+				position: absolute;  
+				width: 240px;  
+				height: auto;  
+				font-family: simsun;  
+				font-size: 10px;
+				text-align: left;  
+				color: white;  
+				border-width: 1px solid grey;  
+				background-color: #000000;  
+				border-radius: 3px; 
+				padding: 7px;
+				opacity: 0;
+			}  
+			.tooltip:after{   
+				content: '';  
+				position: absolute;  
+				bottom: 100%;  
+				left: 20%;  
+				margin-left: -3px;  
+				width: 0;  
+				height: 0;  
+				opacity: 0;
+				padding: 7 px;
+				border-bottom: 12px solid black;  
+				border-right: 12px solid transparent;  
+				border-left: 12px solid transparent;  
+			}  
+	</style>  
+  </head>   
+  <body style=" opacity:1"> 
+	
+    <script src="d3.v3.js" charset="utf-8" ></script>	
+	<script type="text/javascript">  
+		var  width=(window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth)*0.9;
+		var  height=(window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight)*0.9;
+		var  img_h=50;
+		var  img_w=50;
+		var  radius=10;
+		var svg=d3.select("body")  
+                .append("svg")  
+                .attr("width",width)  
+                .attr("height",height); 
+
+		var nodes=[
+				{name:"Normal People",image:"normal.jpg",intro:"Retro Romantic School"},
+				{name:"Dopesick",image:"dopesick.jpg",intro:"Medical  Society"},
+				{name:"Handmaid's Tale",image:"handmaid.jpg",intro:"Novel Fantasy Feminism Society Politics"},
+				{name:"Only Murders in the Building",image:"murder.jpg",intro:"Comedy Retro Suspense"},
+				{name:"Pose",image:"pose.jpg",intro:"LGBTQ+ Acting"},
+				{name:"The Dropout",image:"dropout.jpg",intro:"Medical  Finance  Tech"},
+	            {name:"Mrs. America",image:"msamerica.jpg",intro:"Feminism Politics Society"},
+				{name:"Glee",image:"glee.jpg",intro:"Music Comedy"},
+				{name:"Atlanta",image:"atlanta.jpg",intro:"LGBT+/Race"},
+				{name:"Rick and Morty",image:"r&m.jpg",intro:"Comic Tech Society Comedy"},
+				{name:"This Is Us",image:"thisisus.jpg",intro:"Life Family Society"},
+				{name:"RuPaul",image:"rupaul.jpg",intro:"LGBTQ+ Reality TV"},
+				{name:"Skins",image:"skins.jpg",intro:"School  Romantic  Society"},
+				{name:"Law & Order",image:"lawandorder.jpg",intro:"Law Professions Society"},
+				{name:"Solar Opposites",image:"wxnm.jpg",intro:"Comic Tech Society Comedy"},
+				{name:"Killing Eve",image:"killyve.jpg",intro:"Suspense  Comedy"},
+				{name:"Vikings",image:"vikings.jpg",intro:"Retro War Fantasy"}];
+		
+		var edges=[
+			   {source:0,target:12,relation:"Same theme"},
+			   {source:1,target:5,relation:"Same theme"},
+			   {source:9,target:14,relation:"Same theme"},
+			   {source:4,target:8,relation:"Same theme"},
+			   {source:6,target:2,relation:"Same theme"},
+			   {source:7,target:10,relation:"Same theme"},
+			   {source:8,target:11,relation:"Same theme"},
+			   {source:4,target:11,relation:"Same theme"},
+			   {source:6,target:13,relation:"Same theme"},
+
+			   {source:0,target:3,relation:"Same producer"},
+			   {source:0,target:7,relation:"Same producer"},
+			   {source:2,target:7,relation:"Same producer"},
+			   {source:10,target:16,relation:"Same producer"},
+			   {source:15,target:13,relation:"Same producer"},
+			   {source:15,target:7,relation:"Same producer"},
+
+			   {source:2,target:10,relation:"Same director"},
+			   {source:3,target:6,relation:"Same director"},
+			   {source:14,target:3,relation:"Same director"},
+
+			   {source:8,target:1,relation:"Same scriptwriter"},
+			   {source:13,target:2,relation:"Same scriptwriter"},
+			   {source:16,target:9,relation:"Same scriptwriter"},
+			   {source:11,target:4,relation:"Same scriptwriter"},
+			   {source:1,target:9,relation:"Same scriptwriter"},
+			   {source:16,target:1,relation:"Same scriptwriter"},
+
+			   {source:12,target:1,relation:"Same cast"},
+			   {source:3,target:7,relation:"Same cast"},
+			   {source:4,target:14,relation:"Same cast"},
+			   {source:9,target:15,relation:"Same cast"},
+			   {source:15,target:12,relation:"Same cast"},
+			   {source:12,target:9,relation:"Same cast"},
+			];
+			   
+		var force=d3.layout.force()
+                .nodes(nodes)
+				.links(edges)
+				.size([width,height])
+				.linkDistance(150)
+				.charge(-1200)
+                .start();	
+        
+		//提示框部分
+		var tooltip=d3.selectAll("body")  
+                    .append("div")  
+                    .attr("class","tooltip")  
+                    .style("opacity",0); 
+
+       //箭头绘制	
+		var defs = svg.append("defs");
+		var radius=10;
+		var arrowMarker = defs.append("marker")
+								.attr("id","arrow")
+								.attr("markerUnits","strokeWidth")
+								.attr("markerWidth","4")
+								.attr("markerHeight","4")
+								.attr("viewBox","0 0 4 4")
+								.attr("refX",20+radius/8-2)   //实际是radius/strokeWidth
+								.attr("refY",2)
+								.attr("orient","auto");
+
+		var arrow_path = "M0,1 L4,2 L0,3 L0,0";
+
+		arrowMarker.append("path")
+					.attr("d",arrow_path); 					
+		var color=d3.scale.category20();
+		var path = svg.selectAll("path")
+								  .data(edges)
+								  .enter()
+								  .append("path")
+								  .attr("id", function(d,i) {
+									   return "edgepath" +i;
+								  })
+								  .attr("class","edges")
+								  .attr("marker-end","url(#arrow)");		
+		var pathtext = svg.selectAll('.pathText')
+				  .data(edges)
+				  .enter()
+				  .append("text")
+				  .attr("class","pathText")
+				  .append('textPath')
+				  .style("fill", "#FFF")
+				  .attr("text-anchor", "middle")//居中
+				  .attr("startOffset","50%")
+				  .attr('xlink:href', function(d,i) { return "#edgepath" + i; })
+				  .text(function(d) { return d.relation; });						  
+		var  img_h=50;
+		var  img_w=50;
+		var  radius=23;								
+		var  circles=svg.selectAll("forceCircle")
+	               .data(nodes)
+				   .enter()
+				   .append("circle")
+				   .attr("class","forceCircle")
+				   .attr("r",radius)
+				   .style("stroke","DarkGray")
+				   .style("stroke-width","1.0px")
+				   .attr("fill", function(d, i){
+                                    //创建圆形图片
+                                    var defs = svg.append("defs").attr("id", "imgdefs");
+                                    var catpattern = defs.append("pattern")
+                                                         .attr("id", "catpattern" + i)
+                                                         .attr("height", 1)
+                                                         .attr("width", 1);
+                                    catpattern.append("image")
+                                            .attr("x", - (img_w / 2 - radius))
+                                            .attr("y", - (img_h / 2 - radius))
+                                            .attr("width", img_w)
+                                            .attr("height", img_h)
+                                            .attr("xlink:href","img/"+d.image);
+                                    return "url(#catpattern" + i + ")";
+                    })
+		
+					.on("mouseover",function(d,i){    //加入提示框
+                        tooltip.html(""+d.intro)
+                               .style("left",(d3.event.pageX)+"px")  
+                               .style("top",(d3.event.pageY+30)+"px")  
+                               .style("opacity",0.6);  
+					})
+		
+					.on("mousemove",function(d){            
+                          tooltip.style("left",(d3.event.pageX)+"px")  
+                                 .style("top",(d3.event.pageY+30)+"px"); }) 
+		
+                   .on("mouseout",function(d){  
+                        tooltip.style("opacity",0); })
+		
+				   .call(force.drag); 
+		
+	    var texts=svg.selectAll(".forceText")
+                 .data(nodes)
+				 .enter()
+				 .append("text")
+				 .attr("class","forceText")
+				 .attr("x",function(d){return d.x;})
+				 .attr("y",function(d){return d.y;})
+				 .style("stroke", "#FFF")
+                 .attr("dx","-1.5em")
+				 .attr("dy","3.7em")
+				 .text(function(d){return d.name;});
+				 	
+		force.on("tick",function(){
+		      path.attr("d", function(d) {
+					var dx = d.target.x - d.source.x;//增量
+					var	dy = d.target.y - d.source.y;
+					return "M" + d.source.x + ","+ d.source.y + "L" + d.target.x + "," + d.target.y;
+				  });
+			  circles.attr("cx",function(d){return d.x;});
+			  circles.attr("cy",function(d){return d.y;});
+			  texts.attr("x",function(d){return d.x;});
+			  texts.attr("y",function(d){return d.y;});
+		});
+	</script>
+  </body>
+</html>

@@ -1,0 +1,226 @@
+<html>  
+<meta charset="utf-8">
+  <head>      
+	<title>
+		美国各大传媒公司与流媒体平台关系图
+	</title>
+		 <style>
+			path{
+			  fill: none;
+			  stroke: whitesmoke;
+			  stroke-width: 1.5px;
+			}
+			
+			 circle {
+			  stroke: whitesmoke;
+			  stroke-width: 1.5px;
+			}
+			 
+			text {
+			  font: 10px sans-serif;
+			  pointer-events: none;
+			}
+			 
+			.tooltip{  
+				position: absolute;  
+				width: 240px;  
+				height: auto;  
+				font-family: simsun;  
+				font-size: 10px;
+				text-align: left;  
+				color: white;  
+				border-width: 1px solid grey;  
+				background-color: #000000;  
+				border-radius: 3px; 
+				padding: 7px;
+				opacity: 0;
+			}  
+			.tooltip:after{   
+				content: '';  
+				position: absolute;  
+				bottom: 100%;  
+				left: 20%;  
+				margin-left: -3px;  
+				width: 0;  
+				height: 0;  
+				opacity: 0;
+				padding: 7 px;
+				border-bottom: 12px solid black;  
+				border-right: 12px solid transparent;  
+				border-left: 12px solid transparent;  
+			}  
+	</style>  
+  </head>   
+  <body style=" opacity:1"> 
+	<!--<div id="headline" style="text-align: center; margin:15px auto;width: 500px;height: 40px;font-size: 27px;font-weight: 700;">
+		美国各大传媒公司与流媒体平台关系图</div>
+	<p align="right">19数科 姜力菲</p>-->
+    <script src="d3.v3.min.js" charset="utf-8" ></script>	
+	<script type="text/javascript">  
+		var  width=(window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth)*0.9;
+		var  height=(window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight)*0.9;
+		var  img_h=50;
+		var  img_w=50;
+		var  radius=10;
+		var svg=d3.select("body")  
+                .append("svg")  
+                .attr("width",width)  
+                .attr("height",height); 
+
+		var nodes=[
+				{name:"正常人",image:"normal.jpg",intro:"复古 爱情  校园"},
+				{name:"成瘾剂量",image:"dopesick.jpg",intro:"医药卫生  社会"},
+				{name:"使女的故事",image:"handmaid.jpg",intro:"小说改编  科幻  女权  社会  政治"},
+				{name:"大楼里的谋杀案",image:"murder.jpg",intro:"喜剧  复古  悬疑"},
+				{name:"姿态",image:"pose.jpg",intro:"LGBTQ+ 演艺圈"},
+				{name:"辍学者",image:"dropout.jpg",intro:"医药卫生  金融  科技"},
+	            {name:"美国夫人",image:"msamerica.jpg",intro:"女权 政治  社会"},
+				{name:"欢乐合唱团",image:"glee.jpg",intro:"音乐喜剧"},
+				{name:"亚特兰大",image:"atlanta.jpg",intro:"LGBT+/种族"},
+				{name:"瑞克和莫蒂",image:"r&m.jpg",intro:"动漫  科技  社会  喜剧"},
+				{name:"我们这一天",image:"thisisus.jpg",intro:"生活  家庭  社会"},
+				{name:"路保罗变装秀",image:"rupaul.jpg",intro:"LGBTQ+ 真人秀"},
+				{name:"皮囊",image:"skins.jpg",intro:"校园  爱情  社会"},
+				{name:"法律与秩序",image:"lawandorder.jpg",intro:"法律 职业 社会"},
+				{name:"外星也难民",image:"wxnm.jpg",intro:"动漫  科技  社会  喜剧"},
+				{name:"杀死伊芙",image:"killyve.jpg",intro:"悬疑  喜剧"},
+				{name:"维京",image:"vikings.jpg",intro:"复古 小说改编  战争  奇幻"}];
+		
+		var edges=[
+			   {source:0,target:1,relation:"竞争对手"},{source:0,target:3,relation:"竞争对手"},
+			   {source:0,target:1,relation:"竞争对手"},
+			   {source:0,target:10,relation:"母公司"},{source:0,target:11,relation:"母公司"},
+			   {source:8,target:9,relation:"竞争对手"},{source:6,target:12,relation:"母公司"},
+			   {source:10,target:11,relation:"不同业务"}, {source:1,target:3,relation:"竞争对手"}, 
+			   {source:4,target:5,relation:"竞争对手"}, {source:8,target:15,relation:"赶超目标"},
+			   {source:8,target:10,relation:"赶超目标"},{source:8,target:11,relation:"赶超目标"},
+			   {source:8,target:13,relation:"赶超目标"},{source:8,target:14,relation:"赶超目标"},
+			   {source:13,target:15,relation:"流媒体新秀"},{source:11,target:12,relation:"竞争"},
+			   {source:9,target:13,relation:"竞争"},{source:9,target:14,relation:"竞争"},
+			   {source:1,target:4,relation:"母公司"},{source:1,target:9,relation:"母公司"},
+			   {source:4,target:9,relation:"母公司"}, {source:2,target:5,relation:"母公司"}, 
+			   {source:2,target:13,relation:"母公司"},{source:5,target:13,relation:"母公司"},
+			   {source:3,target:14,relation:"母公司"}, {source:8,target:12,relation:"赶超目标"},
+			   {source:6,target:7,relation:"科技行业竞争"},{source:7,target:15,relation:"母公司"}];
+			   
+		var force=d3.layout.force()
+                .nodes(nodes)
+				.links(edges)
+				.size([width,height])
+				.linkDistance(150)
+				.charge(-1200)
+                .start();	
+        
+		//提示框部分
+		var tooltip=d3.selectAll("body")  
+                    .append("div")  
+                    .attr("class","tooltip")  
+                    .style("opacity",0); 
+
+       //箭头绘制	
+		var defs = svg.append("defs");
+		var radius=10;
+		var arrowMarker = defs.append("marker")
+								.attr("id","arrow")
+								.attr("markerUnits","strokeWidth")
+								.attr("markerWidth","4")
+								.attr("markerHeight","4")
+								.attr("viewBox","0 0 4 4")
+								.attr("refX",20+radius/8-2)   //实际是radius/strokeWidth
+								.attr("refY",2)
+								.attr("orient","auto");
+
+		var arrow_path = "M0,1 L4,2 L0,3 L0,0";
+
+		arrowMarker.append("path")
+					.attr("d",arrow_path); 					
+		var color=d3.scale.category20();
+		var path = svg.selectAll("path")
+								  .data(edges)
+								  .enter()
+								  .append("path")
+								  .attr("id", function(d,i) {
+									   return "edgepath" +i;
+								  })
+								  .attr("class","edges")
+								  .attr("marker-end","url(#arrow)");		
+		var pathtext = svg.selectAll('.pathText')
+				  .data(edges)
+				  .enter()
+				  .append("text")
+				  .attr("class","pathText")
+				  .append('textPath')
+				  .style("stroke", "#FFF")
+				  .attr("text-anchor", "middle")//居中
+				  .attr("startOffset","50%")
+				  .attr('xlink:href', function(d,i) { return "#edgepath" + i; })
+				  .text(function(d) { return d.relation; });						  
+		var  img_h=50;
+		var  img_w=50;
+		var  radius=23;								
+		var  circles=svg.selectAll("forceCircle")
+	               .data(nodes)
+				   .enter()
+				   .append("circle")
+				   .attr("class","forceCircle")
+				   .attr("r",radius)
+				   .style("stroke","DarkGray")
+				   .style("stroke-width","1.0px")
+				   .attr("fill", function(d, i){
+                                    //创建圆形图片
+                                    var defs = svg.append("defs").attr("id", "imgdefs");
+                                    var catpattern = defs.append("pattern")
+                                                         .attr("id", "catpattern" + i)
+                                                         .attr("height", 1)
+                                                         .attr("width", 1);
+                                    catpattern.append("image")
+                                            .attr("x", - (img_w / 2 - radius))
+                                            .attr("y", - (img_h / 2 - radius))
+                                            .attr("width", img_w)
+                                            .attr("height", img_h)
+                                            .attr("xlink:href","img/"+d.image);
+                                    return "url(#catpattern" + i + ")";
+                    })
+		
+					.on("mouseover",function(d,i){    //加入提示框
+                        tooltip.html("简介："+d.intro)
+                               .style("left",(d3.event.pageX)+"px")  
+                               .style("top",(d3.event.pageY+30)+"px")  
+                               .style("opacity",0.6);  
+					})
+		
+					.on("mousemove",function(d){            
+                          tooltip.style("left",(d3.event.pageX)+"px")  
+                                 .style("top",(d3.event.pageY+30)+"px"); }) 
+		
+                   .on("mouseout",function(d){  
+                        tooltip.style("opacity",0); })
+		
+				   .call(force.drag); 
+		
+	    var texts=svg.selectAll(".forceText")
+                 .data(nodes)
+				 .enter()
+				 .append("text")
+				 .attr("class","forceText")
+				 .attr("x",function(d){return d.x;})
+				 .attr("y",function(d){return d.y;})
+				 .style("stroke", "#FFF")
+                 .attr("dx","-1.5em")
+				 .attr("dy","3.7em")
+				 .text(function(d){return d.name;});
+				 	
+		force.on("tick",function(){
+		      path.attr("d", function(d) {
+					var dx = d.target.x - d.source.x;//增量
+					var	dy = d.target.y - d.source.y;
+					return "M" + d.source.x + ","+ d.source.y + "L" + d.target.x + "," + d.target.y;
+				  });
+			  circles.attr("cx",function(d){return d.x;});
+			  circles.attr("cy",function(d){return d.y;});
+			  texts.attr("x",function(d){return d.x;});
+			  texts.attr("y",function(d){return d.y;});
+		});
+	</script>
+  </body>
+</html>

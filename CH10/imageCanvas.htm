@@ -1,0 +1,13 @@
+﻿<html>
+	<body>
+	    <h2>数据可视化之JS Canvas 图像处理</h2>
+		<canvas id="myCanvas" width="600" height="400" style="border:1px solid #c3c3c3;"></canvas>
+		<script type="text/javascript">
+			var c=document.getElementById("myCanvas");
+			var cxt=c.getContext("2d");
+			var img=new Image()
+			img.src="flowerS.jpg"
+			cxt.drawImage(img,0,0);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,89 @@
+{
+      "name": "Classification",
+      "children": [
+      
+{
+        "name": "Comedy",
+        "children": [
+         {"name": "Reality TV", "size":21},
+         {"name": "Retro", "size": 16},
+         {"name": "School", "size": 14},
+         {"name": "Suspense", "size": 11},
+         {"name": "Romantic", "size": 17},
+         {"name": "Sports", "size": 7}
+        ]
+       },
+
+{
+        "name": "Suspense",
+        "children": [
+         {"name": "Fantasy", "size": 6},
+         {"name": "Crime", "size": 12},
+         {"name": "Retro", "size": 16},
+         {"name": "Horror", "size":8 },
+         {"name": "Novel", "size":7 }
+        ]
+       },
+       
+ {
+        "name": "Retro",
+        "children": [
+         {"name": "Comedy", "size": 51},
+         {"name": "Drama", "size":37},
+         {"name": "Family", "size": 18},
+         {"name": "Crime", "size": 24},
+         {"name": "Romantic", "size":27 },
+         {"name": "School", "size": 20}
+        ]
+       },
+   
+
+{
+        "name": "Society",
+        "children": [
+         {"name": "Life", "size": 20},
+         {"name": "Race", "size": 12},
+         {"name": "Education", "size": 23},
+         {"name": "Profession", "size": 16},
+         {"name": "Allegory", "size": 6}
+        ]
+       },
+
+
+{
+            "name": "Drama",
+            "children": [
+             {"name": "Medical", "size": 13},
+             {"name": "Novel", "size": 16},
+             {"name": "Sci-fi", "size": 6},
+             {"name": "Suspense", "size": 14},
+             {"name": "Law", "size": 8}
+            ]
+           },
+
+{
+        "name": "Additional Channel",
+        "children": [
+         {"name": "ESPN", "size": 14},
+         {"name": "Spotify", "size": 13},
+         {"name": "HBO MAX", "size": 17}
+        ]
+       },
+
+       {
+        "name": "Documentary",
+        "children": [
+         {"name": "Nature", "size": 7},
+         {"name": "Humanities", "size": 9},
+         {"name": "Society", "size": 10}
+        ]
+       } 
+          
+
+
+
+
+
+      ]
+       }
+    

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<meta name="robots" content="noindex">
+<html>
+	<meta http-equiv="Content-Type" charset="utf-8">
+<body>
+	<p>
+		全国31个省市地区人均GDP（2016）<br>
+		19数科姜力菲
+	</p>
+
+<p id="demo">
+
+  <svg id="histSvg" width="1520" height="800" version="1.1" xmlns="http://www.w3.org/2000/svg" ></svg>
+
+  <script>
+        var hist=document.getElementById("histSvg");
+
+		var myRect=new Array();
+        var gdpName=new Array(31);
+        var PName=new Array(31);
+        var data=new Array(15056,27148,11708,32142,32985,19363,13123,11180,14733,11417,35730,9459,12204,24645,6742,18463,12843,23663,16143,14011,17211,9527,25558,16164,65473,57431,7972,13361,12695,12809,11567);
+        var province=new Array("河南省","山东省","四川省","广东省","江苏省","河北省","湖南省","安徽省","湖北省","广西省","浙江省","云南省","江西省","辽宁省","贵州省","黑龙江","陕西省","福建省","山西省","重庆市","吉林省","甘肃省","内蒙古","新疆区","上海市","北京市","天津市","海南省","宁夏区","青海省","西藏区");
+    
+		for(var i=0;i<31;i++){
+			console.log(i);
+			myRect[i]=document.createElement("rect");
+			hist.appendChild(myRect[i]);
+          
+            gdpName[i]=document.createElement("text");
+            hist.appendChild(gdpName[i]);
+          
+            PName[i]=document.createElement("text");
+            hist.appendChild(PName[i]);
+
+            var hiscolorR=0;
+            var hiscolorG=0;
+            var hiscolorB=Math.trunc(data[i]/180);
+            var h=parseInt(data[i])/90;
+ 
+            myRect[i].outerHTML="<rect x="+(i*40)+" y="+(770-h)+" rx=5 ry=5 width=30 height="+h+" style='fill:rgb("+(hiscolorR)+","+(hiscolorG)+","+(hiscolorB)+") '/>";
+            gdpName[i].outerHTML="<text x="+(i*40)+" y="+(760-h)+" style='font-family:微软雅黑;fill:rgb(0,0,255);font-size:10'> "+data[i]+" </text>";
+            PName[i].outerHTML="<text x="+(i*40)+" y=780 style='font-family:微软雅黑;fill:rgb(0,0,255);font-size:10'> "+province[i]+" </text>";
+        }
+            
+  </script>
+  </p>
+  </body>
+   
+</html>

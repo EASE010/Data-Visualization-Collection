@@ -1,0 +1,68 @@
+<meta name="robots" content="noindex">
+<html>
+	<meta http-equiv="Content-Type" charset="utf-8">
+	<head>
+		<meta charset="UTF-8">
+		<title>文字二叉树</title>
+	</head>
+
+	<body>
+		<p align="center">文字二叉树 19数科姜力菲 </p>
+      <svg id="svg01" with=2400 height=800>  </svg>
+     
+      
+      <script>
+        var w = window.innerWidth|| document.documentElement.clientWidth|| document.body.clientWidth;
+        var h = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
+        w=w*0.98;
+        h=h*0.9;
+        
+        var svg=document.getElementById("svg01");
+        svg.setAttribute("width",w);
+        svg.setAttribute("height",h);
+        
+        var x0=w/2;
+        var y0=h;
+        var L=250;
+        var rate=0.8;
+        var a=-Math.PI/2;
+        var count=7;
+        
+        var str="草色遥看近却无";
+        
+        
+        function show(x0,y0,L,rate,a,count){
+          var fontsize=count*3;
+          var L=str.length*fontsize;
+          var x1=x0;
+          var y1=y0;
+          var x2=x1+L*rate*Math.cos(a);
+          var y2=y1+L*rate*Math.sin(a);      
+        
+          
+          var aL=a-Math.PI/5*(0.5+Math.random()*0.5);
+          var aR=a+Math.PI/5*(0.5+Math.random()*0.5);
+
+		  var green=255-(20*count);
+          var words=document.createElement("text");
+          svg.appendChild(words);
+          words.outerHTML="<text x="+x1+" y="+y1+"  transform='rotate("+a*180/Math.PI+","+x1+","+y1+")' fill='rgb(100,"+green+",50)' font-size="+fontsize*0.8+">"+str+"</text>"
+          
+          if(count>0)
+            {
+              show(x2,y2,L,rate,aL,count-1);
+              show(x2,y2,L,rate,aR,count-1);
+              if(count==1)
+                {
+                  var apple=document.createElement("circle");
+                  svg.appendChild(apple);
+                  apple.outerHTML="<circle cx="+x2+" cy="+y2+" r="+10*Math.random()+" fill='rgb(230,"+250*Math.random()+",20)'/>"
+                }
+            }
+        }
+        show(x0,y0,L,rate,a,count);
+      </script>
+	</body>
+
+</html>
+

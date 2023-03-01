@@ -1,0 +1,290 @@
+[
+  {
+    "name": "NetflixMovie",
+    "show": true,
+    "color": "#663433",
+    "currentPopulation": 768,
+    "history": [
+      {
+        "year": 2006,
+        "population": 0
+      },
+      {
+        "year": 2007,
+        "population": 0
+      },
+      {
+        "year": 2008,
+        "population": 1
+      },
+      {
+        "year": 2009,
+        "population": 2
+      },
+      {
+        "year": 2010,
+        "population": 1
+      },
+      {
+        "year": 2011,
+        "population": 13
+      },
+      {
+        "year": 2012,
+        "population": 3
+      },
+      {
+        "year": 2013,
+        "population": 6
+      },
+      {
+        "year": 2014,
+        "population": 19
+      },
+      {
+        "year": 2015,
+        "population": 54
+      },
+      {
+        "year": 2016,
+        "population": 243
+      },
+      {
+        "year": 2017,
+        "population": 813
+      },
+      {
+        "year": 2018,
+        "population": 1181
+      },
+      {
+        "year": 2019,
+        "population": 1345
+      },
+      {
+        "year": 2020,
+        "population": 1218
+      },
+      {
+        "year": 2021,
+        "population": 768
+      }
+    ]
+  },
+  {
+    "name": "NetflixTVshow",
+    "show": true,
+    "color": "#BA2028",
+    "currentPopulation": 370,
+    "history": [
+      {
+        "year": 2006,
+        "population": 0
+      },
+      {
+        "year": 2007,
+        "population": 0
+      },
+      {
+        "year": 2008,
+        "population": 1
+      },
+      {
+        "year": 2009,
+        "population": 0
+      },
+      {
+        "year": 2010,
+        "population": 0
+      },
+      {
+        "year": 2011,
+        "population": 0
+      },
+      {
+        "year": 2012,
+        "population": 0
+      },
+      {
+        "year": 2013,
+        "population": 4
+      },
+      {
+        "year": 2014,
+        "population": 4
+      },
+      {
+        "year": 2015,
+        "population": 16
+      },
+      {
+        "year": 2016,
+        "population": 156
+      },
+      {
+        "year": 2017,
+        "population": 282
+      },
+      {
+        "year": 2018,
+        "population": 314
+      },
+      {
+        "year": 2019,
+        "population": 493
+      },
+      {
+        "year": 2020,
+        "population": 546
+      },
+      {
+        "year": 2021,
+        "population": 370
+      }
+    ]
+  },
+  {
+    "name": "huluMovie",
+    "show": true,
+    "color": "#426734",
+    "currentPopulation": 97,
+    "history": [
+      {
+        "year": 2006,
+        "population": 0
+      },
+      {
+        "year": 2007,
+        "population": 0
+      },
+      {
+        "year": 2008,
+        "population": 0
+      },
+      {
+        "year": 2009,
+        "population": 0
+      },
+      {
+        "year": 2010,
+        "population": 0
+      },
+      {
+        "year": 2011,
+        "population": 0
+      },
+      {
+        "year": 2012,
+        "population": 1
+      },
+      {
+        "year": 2013,
+        "population": 2
+      },
+      {
+        "year": 2014,
+        "population": 11
+      },
+      {
+        "year": 2015,
+        "population": 7
+      },
+      {
+        "year": 2016,
+        "population": 5
+      },
+      {
+        "year": 2017,
+        "population": 22
+      },
+      {
+        "year": 2018,
+        "population": 61
+      },
+      {
+        "year": 2019,
+        "population": 141
+      },
+      {
+        "year": 2020,
+        "population": 313
+      },
+      {
+        "year": 2021,
+        "population": 97
+      }
+    ]
+  },
+  {
+    "name": "huluTVshow",
+    "show": true,
+    "color": "#60B921",
+    "currentPopulation": 162,
+    "history": [
+      {
+        "year": 2006,
+        "population": 1
+      },
+      {
+        "year": 2007,
+        "population": 0
+      },
+      {
+        "year": 2008,
+        "population": 2
+      },
+      {
+        "year": 2009,
+        "population": 7
+      },
+      {
+        "year": 2010,
+        "population": 12
+      },
+      {
+        "year": 2011,
+        "population": 15
+      },
+      {
+        "year": 2012,
+        "population": 15
+      },
+      {
+        "year": 2013,
+        "population": 31
+      },
+      {
+        "year": 2014,
+        "population": 36
+      },
+      {
+        "year": 2015,
+        "population": 53
+      },
+      {
+        "year": 2016,
+        "population": 53
+      },
+      {
+        "year": 2017,
+        "population": 167
+      },
+      {
+        "year": 2018,
+        "population": 118
+      },
+      {
+        "year": 2019,
+        "population": 105
+      },
+      {
+        "year": 2020,
+        "population": 160
+      },
+      {
+        "year": 2021,
+        "population": 162
+      }
+    ]
+  }
+  ]
